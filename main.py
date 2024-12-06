@@ -135,8 +135,8 @@ while run:
             if turn_step > 1:
                 if click_coords in black_locations: # if we click on the black piece
                     selection = black_locations.index(click_coords)
-                    if turn_step == 2: # to be in the step zero means you don't have anything selected now you have to select something
-                        turn_step = 3 # also it will help to stay in turn_step 1 if you want to use another piece / change your selection
+                    if turn_step == 2: # to be in the step two means you don't have anything selected now you have to select something
+                        turn_step = 3 # also it will help to stay in turn_step 2 if you want to use another piece / change your selection
                     if click_coords in valid_moves and selection != 100: # that means we just click on the square that we are allowed to move that piece
                         black_locations[selection] = click_coords
                         if click_coords in white_locations:
