@@ -85,7 +85,7 @@ while run:
     screen.fill('dark gray')
 
 
-    # event gandling
+    # event handling
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
@@ -103,7 +103,7 @@ while run:
                     if click_coords in valid_moves and selection != 100: # that means we just click on the square that we are allowed to move that piece
                         white_locations[selection] = click_coords
                         if click_coords in black_locations:
-                            black_piece = black_locations.index(click_coords) # checkin which black piece we took out
+                            black_piece = black_locations.index(click_coords) # check in which black piece we took out
                             captured_pieces_white.append(black_pieces[black_piece])
                             black_pieces.pop(black_piece) # remove black piece from our list of the black player's active pieces
                             black_locations.pop(black_piece) # remove the white piece that we just landed on from our pieces and our locations list and add to captured white pieces
@@ -122,7 +122,7 @@ while run:
                     if click_coords in valid_moves and selection != 100: # that means we just click on the square that we are allowed to move that piece
                         black_locations[selection] = click_coords
                         if click_coords in white_locations:
-                            white_piece = white_locations.index(click_coords) # checkin which white piece we took out
+                            white_piece = white_locations.index(click_coords) # check in which white piece we took out
                             captured_pieces_black.append(white_pieces[white_piece])
                             white_pieces.pop(white_piece) # remove white piece from our list of the black player's active pieces
                             white_locations.pop(white_piece) # remove the black piece that we just landed on from our pieces and our locations list and add to captured white pieces
