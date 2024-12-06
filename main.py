@@ -128,7 +128,7 @@ while run:
                             white_locations.pop(white_piece) # remove the black piece that we just landed on from our pieces and our locations list and add to captured white pieces
                         black_options = check_options(black_pieces, black_locations, 'black')
                         white_options = check_options(white_pieces, white_locations, 'white')
-                        turn_step = 2
+                        turn_step = 0
                         selection = 100
                         valid_moves = []
 
