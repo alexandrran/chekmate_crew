@@ -9,8 +9,8 @@ WIDTH = 1000
 HEIGHT = 900
 screen = pygame.display.set_mode([WIDTH, HEIGHT])
 pygame.display.set_caption('Checkmate Crew Pygame Chess!')
-font = pygame.font.Font('freesansbold.ttf', 20)
-big_font = pygame.font.Font('freesansbold.ttf', 50)
+font = pygame.font.Font("assets/fonts/bold_font.ttf", 20)
+big_font = pygame.font.Font("assets/fonts/bold_font.ttf", 50)
 timer = pygame.time.Clock()
 fps = 60
 # game variables and images
@@ -74,6 +74,50 @@ small_black_images = [black_pawn_small, black_queen_small, black_king_small, bla
 piece_list = ['pawn', 'queen', 'king', 'knight', 'rook', 'bishop']
 # check variables/ flashing counter
 
+
+
+# main board
+def draw_board():
+    for i in range(32):# there are 8*8 = 64 squares on a board, but we can cut the amount in half by using the background as every other square
+        column = i % 4
+        row = i // 4
+        # calculates which row and column to put a square, for example square 11 will be placed on column = 11 % 4 = 3(4, because we have a zero), and row = 11 // 4 = 2(3, because we have a zero)
+        if row % 2 != 0:
+            pygame.draw.rect(screen, (72,149,191,255), [600 - (column * 200), row * 100, 100, 100])# draws rect
+        else:
+            pygame.draw.rect(screen, (72,149,191,255), [700 - (column * 200), row * 100, 100, 100])# offsets neven squares by 100
+        pygame.draw.rect(screen, (41,80,149,255), [0, 800, WIDTH, 100], 5)# draws outline
+        pygame.draw.rect(screen, (41,80,149,255), [800, 0, 200, HEIGHT], 5)# draws outline
+        status_text = ['White, pick your piece', 'Where should it go?', 'Black, pick your piece', 'Where should it go?']# all the status texts
+        screen.blit(big_font.render(status_text[turn_step], True, (151,71,124,255)), (20, 820))
+
+# Drawing pieces on board
+def draw_pieces():
+    for i in range(len(white_pieces)): # not making for i in range(16) because the amount of pieces can change
+        index = piece_list.index(white_pieces[i]) # we need an index to know which image we can use
+
+        if white_pieces[i] == 'pawn': # we need a separate one for pawns, because they are smaller
+            screen.blit(white_pawn, (white_locations[i][0] * 100 + 18, white_locations[i][1] * 100 + 16))# offset to make the pawn sit in the middle of a square
+        else:
+            screen.blit(white_images[index], (white_locations[i][0] * 100 + 10, white_locations[i][1] * 100 + 10))# the same thing with other pieces, but the all share the same offset
+        if turn_step < 2: # outline white selected piece
+            if selection == i:
+                pygame.draw.rect(screen, (30,28,67,255), [white_locations[i][0] * 100, white_locations[i][1] * 100, 100, 100], 2)
+
+    for i in range(len(black_pieces)):  # not making for i in range(16) because the amount of pieces can change
+         index = piece_list.index(black_pieces[i])  # we need an index to know which image we can use
+
+         if black_pieces[i] == 'pawn':  # we need a separate one for pawns, because they are smaller
+            screen.blit(black_pawn, (black_locations[i][0] * 100 + 18, black_locations[i][1] * 100 + 16))  # offset to make the pawn sit in the middle of a square
+         else:
+            screen.blit(black_images[index], (black_locations[i][0] * 100 + 10, black_locations[i][1] * 100 + 10))  # the same thing with other pieces, but the all share the same offset
+         if turn_step >= 2:  # outline white selected piece
+            if selection == i:
+                pygame.draw.rect(screen,(151,71,124,255), [black_locations[i][0] * 100, black_locations[i][1] * 100, 100, 100], 2)
+
+
+
+
 # function to check all pieces valid options on board
 def check_options(pieces, locations, turn):
     moves_list = []
@@ -96,11 +140,16 @@ def check_options(pieces, locations, turn):
         all_moves_list.append(moves_list)
     return all_moves_list
 
+
+
+
 # main game loop
 run = True
 while run:
     timer.tick(fps)
-    screen.fill('dark gray')
+    screen.fill((164,208,221,255))
+    draw_board()
+    draw_pieces()
 
 
     # event handling
