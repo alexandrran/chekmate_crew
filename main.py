@@ -140,7 +140,56 @@ def check_options(pieces, locations, turn):
         all_moves_list.append(moves_list)
     return all_moves_list
 
+# check rook moves
+def check_rook(position,color):
+    moves_list = []
+    if color == 'white': # user selected white rook that means black - enemies , white - friends
+        enemies_list = black_locations
+        friends_list = white_locations
+    else: # the same, but user selected black rook
+        enemies_list = white_locations
+        friends_list = black_locations
+    for i in range(4): # down, up, right, left (the possible/valid moves)
+        path = True
+        chain = 1 # if we find a piece open then the chain of pieces in our path is one, but every time we find another piece to continue on with is open then we will extend that chain value
+        if i == 0: # that would be down
+            x = 0
+            y = 1
+        elif i == 1: # that would be up
+            x = 0
+            y = -1
+        elif i == 2: # that would be right
+            x = 1
+            y = 0
+        else:        # that would be left
+            x = -1
+            y = 0
+        while path: # you don't have to checking down or up or left or right that line you've hit a wall you've hit a piece you can't move any farther
+            # the code below should check if we have an open path going forward
+            # also we want to check if we're allowed to move to the right (X = 1) \
+            # and change chain starts as a 1, that means that the first position \
+            # we check is our current Y position, because Y is equal to zero so \
+            # this whole piece becomes equal to zero so this is just checkin our current white position \
+            # plus one to the right of our current X position and if that's not in the friends list \
+            # and that spot position 0 to the right is between 0 and 7 then we can move there \
+            # whether it's empty or there's an enemy there we can move that way
 
+            # we check for any direction we're checking to see if we can continue going in that way \
+            # so it's either empty or with an enemy if all this first lines are true, so that means \
+            # that we can add it ot the moves list, but if it is an enemy we need to do additional thing and say \
+            # then the path is actually false , we can't go any further in that direction
+            if (position[0] + (chain * x), position[1] + (chain * y)) not in friends_list and \
+                0 <= position[0] + (chain * x) <= 7 and 0 <= position[1] + (chain * y) <= 7:
+                moves_list.append((position[0] + (chain * x), position[1] + (chain * y)))
+            # the code below should check if the piece is an enemies list ,if yes , we need to break it
+                if (position[0] + (chain * x), position[1] + (chain * y)) not in enemies_list:
+                    path = False
+                chain += 1
+
+            else:
+                path = False
+
+    return moves_list
 
 
 # main game loop
