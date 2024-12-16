@@ -140,6 +140,45 @@ def check_options(pieces, locations, turn):
         all_moves_list.append(moves_list)
     return all_moves_list
 
+# check valid pawn moves
+def check_pawn(position, color):
+    moves_list = [] # List to store possible moves
+
+    # Check moves for a white pawn
+    if color == 'white':
+        # Move one step forward if the cell is empty and within the board's bounds
+        if (position[0], position[1] + 1) not in white_locations and \
+                (position[0], position[1] + 1) not in black_locations and position[1] < 7:
+            moves_list.append((position[0], position[1] + 1))
+        # Move two steps forward if the pawn is on its starting position and both cells are empty
+        if (position[0], position[1] + 2) not in white_locations and \
+                (position[0], position[1] + 2) not in black_locations and position[1] == 1:
+            moves_list.append((position[0], position[1] + 2))
+        # Capture an opponent's piece diagonally to the right
+        if (position[0] + 1, position[1] + 1) in black_locations:
+            moves_list.append((position[0] + 1, position[1] + 1))
+        # Capture an opponent's piece diagonally to the left
+        if (position[0] - 1, position[1] + 1) in black_locations:
+            moves_list.append((position[0] - 1, position[1] + 1))
+    # Check moves for a black pawn
+    else:
+        # Move one step forward if the cell is empty and within the board's bounds
+        if (position[0], position[1] - 1) not in white_locations and \
+                (position[0], position[1] - 1) not in black_locations and position[1] > 0:
+            moves_list.append((position[0], position[1] - 1))
+        # Move two steps forward if the pawn is on its starting position
+        if (position[0], position[1] - 2) not in white_locations and \
+                (position[0], position[1] - 2) not in black_locations and position[1] == 6:
+            moves_list.append((position[0], position[1] - 2))
+        # Capture an opponent's piece diagonally to the right
+        if (position[0] + 1, position[1] - 1) in white_locations:
+            moves_list.append((position[0] + 1, position[1] - 1))
+          # Capture an opponent's piece diagonally to the left
+        if (position[0] - 1, position[1] - 1) in white_locations:
+            moves_list.append((position[0] - 1, position[1] - 1))
+    # Return the list of possible moves
+    return moves_list
+
 # check rook moves
 def check_rook(position,color):
     moves_list = []
