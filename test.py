@@ -93,7 +93,7 @@ def draw_board():
                              [700 - (column * 200), row * 100, 100, 100])  # offsets neven squares by 100
         pygame.draw.rect(screen, (41, 80, 149, 255), [0, 800, WIDTH, 100], 5)  # draws outline
         pygame.draw.rect(screen, (41, 80, 149, 255), [800, 0, 200, HEIGHT], 5)  # draws outline
-        status_text = ['White, pick your piece', 'Where should it go?', 'Black, pick your piece',
+        status_text = ['Pink, pick your piece', 'Where should it go?', 'Blue, pick your piece',
                        'Where should it go?']  # all the status texts
         screen.blit(big_font.render(status_text[turn_step], True, (151, 71, 124, 255)), (20, 820))
         for i in range(9):
